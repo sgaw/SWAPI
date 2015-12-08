@@ -6,9 +6,8 @@ import org.junit.Test;
 import org.json.JSONObject;
 import static org.junit.Assert.*;
 
-import sgaw.playground.com.swapiapp.data.Character;
+import sgaw.playground.com.swapiapp.data.FilmCharacter;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Multiset;
 
 /**
  * Created by shirleygaw on 08/12/15.
@@ -68,11 +67,11 @@ public class JSONToCharacterTest {
 
     @Test
     public void testConvert() throws Exception {
-        Character expected = Character.newBuilder()
+        FilmCharacter expected = FilmCharacter.newBuilder()
                 .setHeight(230)
                 .setMass(30)
-                .addHairColor(Character.HAIR_BLACK)
-                .setEyeColor(Character.EYE_GREY)
+                .addHairColor(FilmCharacter.HAIR_BLACK)
+                .setEyeColor(FilmCharacter.EYE_GREY)
                 .setBirthYear("myyear")
                 .build();
         assertTrue(expected.equals(underTest.apply(jsonCharacter)));

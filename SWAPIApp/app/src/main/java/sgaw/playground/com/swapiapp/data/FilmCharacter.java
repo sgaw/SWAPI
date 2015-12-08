@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * POJO to represent a film character.
  */
-public class Character {
+public class FilmCharacter {
     // Replacement for enums in Android
     @IntDef({GENDER_MALE,
             GENDER_FEMALE,
@@ -61,8 +61,8 @@ public class Character {
     private final String mBirthYear;
     private final @Gender int mGender;
 
-    public Character(int height, int mass, @HairColor int[] hairColor,
-                     @EyeColor int eyeColor, String birthYear, int gender) {
+    public FilmCharacter(int height, int mass, @HairColor int[] hairColor,
+                         @EyeColor int eyeColor, String birthYear, int gender) {
         this.mHeight = height;
         this.mMass = mass;
         this.mHairColor = hairColor;
@@ -77,11 +77,11 @@ public class Character {
             return true;
         }
 
-        if (other == null || !(other instanceof Character)) {
+        if (other == null || !(other instanceof FilmCharacter)) {
             return false;
         }
 
-        Character that = (Character) other;
+        FilmCharacter that = (FilmCharacter) other;
         return (this.mHeight == that.mHeight)
                 && (this.mMass == that.mMass)
                 && (this.mHairColor[0] == that.mHairColor[0])
@@ -141,9 +141,9 @@ public class Character {
             return this;
         }
 
-        public Character build() {
+        public FilmCharacter build() {
             assert(mBirthYear != null && !mBirthYear.isEmpty());
-            return new Character(mHeight, mMass, mHairColor, mEyeColor, mBirthYear,
+            return new FilmCharacter(mHeight, mMass, mHairColor, mEyeColor, mBirthYear,
                     mGender);
         }
     }

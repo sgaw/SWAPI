@@ -4,21 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.util.CircularArray;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import sgaw.playground.com.swapiapp.converters.JSONToCharacterList;
 import sgaw.playground.com.swapiapp.dummy.DummyContent;
 
 import java.util.List;
+import sgaw.playground.com.swapiapp.data.FilmCharacter;
 
 /**
  * An activity representing a list of Characters. This activity
@@ -29,6 +33,8 @@ import java.util.List;
  * item details side-by-side using two vertical panes.
  */
 public class CharacterListActivity extends AppCompatActivity {
+    private JSONToCharacterList mConverter = new JSONToCharacterList();
+    private static CircularArray<FilmCharacter> sCharacters = null;
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -44,6 +50,17 @@ public class CharacterListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
+
+        if (sCharacters == null) {
+            JSONObject result = mConverter.readAsset(this);
+            try {
+                sCharacters = mConverter.apply(result);
+            } catch (JSONException e) {
+                Log.e("CharacterListActivity", e.getMessage());
+                sCharacters = new CircularArray<>(0);
+            }
+        }
+        Log.d("CharacterListActivity", sCharacters.size() + " characters read");
 
         View recyclerView = findViewById(R.id.character_list);
         assert recyclerView != null;
