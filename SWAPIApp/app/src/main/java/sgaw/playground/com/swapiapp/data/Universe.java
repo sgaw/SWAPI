@@ -60,7 +60,7 @@ public class Universe {
         return null;
     }
 
-    public FilmCharacter getCharacter(String uri) {/*
+    public FilmCharacter getCharacter(String uri) {
         // Inefficient but there's not that much data, I expect
         for (int i = 0; i < mCharacters.size(); i++) {
             if (mCharacters.get(i).getUri().equals(uri)) {
@@ -68,12 +68,7 @@ public class Universe {
             }
         }
 
-        throw new IllegalStateException("Sending bad URI: " + uri);*/
-        return FilmCharacter.newBuilder()
-                .setName("My Test Name")
-                .setBirthYear("testbirthyear")
-                .setUri("http://myfakesite.com")
-                .build();
+        throw new IllegalStateException("Sending bad URI: " + uri);
     }
 
 }

@@ -1,8 +1,8 @@
 package sgaw.playground.com.swapiapp;
 
 import android.app.Activity;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +11,8 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.internal.ButterKnifeProcessor;
 import sgaw.playground.com.swapiapp.data.FilmCharacter;
 import sgaw.playground.com.swapiapp.data.Universe;
-import sgaw.playground.com.swapiapp.dummy.DummyContent;
 
 /**
  * A fragment representing a single Character detail screen.
@@ -23,14 +21,15 @@ import sgaw.playground.com.swapiapp.dummy.DummyContent;
  * on handsets.
  */
 public class CharacterDetailFragment extends Fragment {
-    public static final String ARG_CHARACTER_ID = "character_id";
+    public static final String ARG_CHARACTER_ID = "character_uri";
 
     private static final FilmCharacter DEFAULT_CHARACTER =
             FilmCharacter.newBuilder()
-                    .setName("Default Character name")
-                    .setUri("http://stubwebsite.com")
+                    .setName("FIXME default character name")
+                    .setUri("http://fixme.com")
                     .setBirthYear("badyear")
                     .build();
+    private static final String BUNDLE_CHARACTER_URI = "character_uri";
 
     @Bind(R.id.character_detail)
     TextView mTextView;
@@ -49,18 +48,11 @@ public class CharacterDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_CHARACTER_ID)) {
-            Universe universe = Universe.get(getContext());
-            mCharacter = universe.getCharacter(
+            mCharacter = Universe.get(getContext()).getCharacter(
                     getArguments().getString(ARG_CHARACTER_ID));
         } else {
             // Shouldn't get here but give the visual clue that something's wrong
             mCharacter = DEFAULT_CHARACTER;
-        }
-
-        Activity activity = this.getActivity();
-        CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-        if (appBarLayout != null) {
-            appBarLayout.setTitle(mCharacter.getName());
         }
 
     }
@@ -72,6 +64,14 @@ public class CharacterDetailFragment extends Fragment {
 
         ButterKnife.bind(this, rootView);
         mTextView.setText(mCharacter.getBirthYear());
+
+
+        Activity activity = this.getActivity();
+        if (activity instanceof  CharacterDetailActivity) {
+            CollapsingToolbarLayout appBarLayout =
+                    ((CharacterDetailActivity) activity).getCollapsingToolbarLayout();
+            appBarLayout.setTitle(mCharacter.getName());
+        }
 
         return rootView;
     }

@@ -1,29 +1,19 @@
 package sgaw.playground.com.swapiapp;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.util.CircularArray;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import sgaw.playground.com.swapiapp.converters.JSONToCharacterList;
-import sgaw.playground.com.swapiapp.data.Universe;
 import sgaw.playground.com.swapiapp.dummy.DummyContent;
 
 import java.util.List;
-import sgaw.playground.com.swapiapp.data.FilmCharacter;
 
 /**
  * An activity representing a list of Characters. This activity
@@ -64,16 +54,22 @@ public class CharacterListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(DummyContent.ITEMS));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(DummyContent.ITEMS,
+                new ShowCharacterDetailFragmentOnClickListener(
+                        getSupportFragmentManager(), mTwoPane,
+                        "http://swapi.co/api/people/9/")));
     }
 
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final List<DummyContent.DummyItem> mValues;
+        private final View.OnClickListener mViewClickListener;
 
-        public SimpleItemRecyclerViewAdapter(List<DummyContent.DummyItem> items) {
+        public SimpleItemRecyclerViewAdapter(List<DummyContent.DummyItem> items,
+                                             View.OnClickListener viewClickListener) {
             mValues = items;
+            mViewClickListener = viewClickListener;
         }
 
         @Override
@@ -89,28 +85,7 @@ public class CharacterListActivity extends AppCompatActivity {
             holder.mIdView.setText(mValues.get(position).id);
             holder.mContentView.setText(mValues.get(position).content);
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mTwoPane) {
-                        Bundle arguments = new Bundle();
-                        arguments.putString(CharacterDetailFragment.ARG_CHARACTER_ID,
-                                "stubCharacterId");
-                        CharacterDetailFragment fragment = new CharacterDetailFragment();
-                        fragment.setArguments(arguments);
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.character_detail_container, fragment)
-                                .commit();
-                    } else {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, CharacterDetailActivity.class);
-                        intent.putExtra(CharacterDetailFragment.ARG_CHARACTER_ID,
-                                "stubCharacterId");
-
-                        context.startActivity(intent);
-                    }
-                }
-            });
+            holder.mView.setOnClickListener(mViewClickListener);
         }
 
         @Override
@@ -136,5 +111,7 @@ public class CharacterListActivity extends AppCompatActivity {
                 return super.toString() + " '" + mContentView.getText() + "'";
             }
         }
+
     }
+
 }

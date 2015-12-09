@@ -2,6 +2,7 @@ package sgaw.playground.com.swapiapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
+import java.lang.ref.WeakReference;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * An activity representing a single Character detail screen. This
  * activity is only used narrow width devices. On tablet-size devices,
@@ -17,13 +23,19 @@ import android.view.MenuItem;
  * in a {@link CharacterListActivity}.
  */
 public class CharacterDetailActivity extends AppCompatActivity {
+    @Bind(R.id.toolbar_layout)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    @Bind(R.id.detail_toolbar)
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
-        setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -68,5 +80,9 @@ public class CharacterDetailActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public CollapsingToolbarLayout getCollapsingToolbarLayout() {
+        return mCollapsingToolbarLayout;
     }
 }
