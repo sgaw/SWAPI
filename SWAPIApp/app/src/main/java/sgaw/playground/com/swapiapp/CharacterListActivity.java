@@ -5,18 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import sgaw.playground.com.swapiapp.data.Universe;
-import sgaw.playground.com.swapiapp.dummy.DummyContent;
-
-import java.util.List;
 
 /**
  * An activity representing a list of Characters. This activity
