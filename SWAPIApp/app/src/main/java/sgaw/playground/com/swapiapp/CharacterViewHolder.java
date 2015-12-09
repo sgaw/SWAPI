@@ -25,6 +25,16 @@ public class CharacterViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
+    // For unit testing
+    public CharacterViewHolder(View itemView,
+                               TextView idView,
+                               TextView contentView) {
+        super(itemView);
+        mView = itemView;
+        mIdView = idView;
+        mContentView = contentView;
+    }
+
     public void update(FilmCharacter character,
                        ShowCharacterDetailFragmentOnClickListener listener) {
         mIdView.setText(character.getBirthYear());
