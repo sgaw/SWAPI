@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import sgaw.playground.com.swapiapp.data.FilmCharacter;
+import sgaw.playground.com.swapiapp.data.ICircularArray;
 
 /**
  * Converter from asset file to list of Character POJOs.
@@ -23,8 +24,8 @@ public class JSONToCharacterList {
      * @param characters output list
      * @return
      */
-    public CircularArray<FilmCharacter> apply(JSONObject jsonObject,
-                                              CircularArray<FilmCharacter> characters) {
+    public ICircularArray<FilmCharacter> apply(JSONObject jsonObject,
+                                              ICircularArray<FilmCharacter> characters) {
 
         JSONArray jsonArray = null;
         try {

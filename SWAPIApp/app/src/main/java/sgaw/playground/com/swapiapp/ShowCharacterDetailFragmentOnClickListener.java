@@ -3,6 +3,7 @@ package sgaw.playground.com.swapiapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
@@ -16,7 +17,8 @@ import java.lang.ref.WeakReference;
 class ShowCharacterDetailFragmentOnClickListener implements View.OnClickListener {
     private final WeakReference<FragmentManager> mSupportFragmentManagerRef;
     private final boolean mTwoPane;
-    private final String mCharacterUri;
+    @VisibleForTesting
+    public final String mCharacterUri;
 
     public ShowCharacterDetailFragmentOnClickListener(FragmentManager supportFragmentManager,
                                                       boolean twoPane,

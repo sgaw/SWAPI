@@ -46,7 +46,8 @@ public class JSONToCharacterTest {
                 "\"hair_color\": \"black\", " +
                 "\"eye_color\": \"blue-grey\", " +
                 "\"birth_year\": \"myyear\", " +
-                "\"gender\": \"n/a\" }");
+                "\"gender\": \"n/a\", " +
+                "\"url\": \"http://fakesite.com/id/5\" }");
     }
 
     @Test
@@ -73,6 +74,7 @@ public class JSONToCharacterTest {
                 .addHairColor(FilmCharacter.HAIR_BLACK)
                 .setEyeColor(FilmCharacter.EYE_GREY)
                 .setBirthYear("myyear")
+                .setUri("http://fakesite.com/id/5")
                 .build();
         assertTrue(expected.equals(underTest.apply(jsonCharacter)));
     }

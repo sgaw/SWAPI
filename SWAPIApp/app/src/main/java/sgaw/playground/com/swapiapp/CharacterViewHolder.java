@@ -6,17 +6,18 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import sgaw.playground.com.swapiapp.data.FilmCharacter;
 
 /**
  * {@link RecyclerView.ViewHolder} for {@link sgaw.playground.com.swapiapp.data.FilmCharacter}.
  */
 public class CharacterViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.id)
-    public TextView mIdView;
+    TextView mIdView;
 
     @Bind(R.id.content)
-    public TextView mContentView;
-    public View mView;
+    TextView mContentView;
+    View mView;
 
     public CharacterViewHolder(View itemView) {
         super(itemView);
@@ -24,7 +25,12 @@ public class CharacterViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-
+    public void update(FilmCharacter character,
+                       ShowCharacterDetailFragmentOnClickListener listener) {
+        mIdView.setText(character.getBirthYear());
+        mContentView.setText(character.getName());
+        mView.setOnClickListener(listener);
+    }
     @Override
     public String toString() {
         return super.toString() + " '" + mContentView.getText() + "'";

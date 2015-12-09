@@ -21,15 +21,15 @@ public class Universe {
 
     @VisibleForTesting
     static Universe sSelf = null;
-    private CircularArray<FilmCharacter> mCharacters = null;
+    private ICircularArray<FilmCharacter> mCharacters = null;
 
-    public Universe(CircularArray<FilmCharacter> characters) {
+    public Universe(ICircularArray<FilmCharacter> characters) {
         mCharacters = characters;
     }
 
     public static Universe get(Context context) {
         if (sSelf == null) {
-            CircularArray<FilmCharacter> characters = new CircularArray<>();
+            CircularArrayWrapper<FilmCharacter> characters = new CircularArrayWrapper<>();
             JSONToCharacterList converter = new JSONToCharacterList();
             converter.apply(readAsset(context), characters);
             sSelf = new Universe(characters);
@@ -60,7 +60,7 @@ public class Universe {
         return null;
     }
 
-    public CircularArray<FilmCharacter> getCharacters() {
+    public ICircularArray<FilmCharacter> getCharacters() {
         return mCharacters;
     }
 

@@ -9,19 +9,23 @@ import android.view.ViewGroup;
 
 import java.lang.ref.WeakReference;
 
+import sgaw.playground.com.swapiapp.data.CircularArrayWrapper;
 import sgaw.playground.com.swapiapp.data.FilmCharacter;
+import sgaw.playground.com.swapiapp.data.ICircularArray;
 import sgaw.playground.com.swapiapp.data.Universe;
 
 /**
- * Created by shirleygaw on 09/12/15.
+ * {@link android.support.v7.widget.RecyclerView.Adapter} for binding {@link FilmCharacter}
+ * to their respective view holders.
  */
 public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<CharacterViewHolder> {
     private final WeakReference<FragmentManager> mSupportFragmentManagerRef;
     private final boolean mTwoPane;
-    private final CircularArray<FilmCharacter> mCharacters;
+    private final ICircularArray<FilmCharacter> mCharacters;
 
     public CharacterRecyclerViewAdapter(FragmentManager supportFragmentManager,
-                                        boolean twoPane, CircularArray<FilmCharacter> characters) {
+                                        boolean twoPane,
+                                        ICircularArray<FilmCharacter> characters) {
         mSupportFragmentManagerRef = new WeakReference<>(supportFragmentManager);
         mTwoPane = twoPane;
         mCharacters = characters;
@@ -38,9 +42,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<Character
     @Override
     public void onBindViewHolder(CharacterViewHolder holder, int position) {
         FilmCharacter character = mCharacters.get(position);
-        holder.mIdView.setText(character.getBirthYear());
-        holder.mContentView.setText(character.getName());
-        holder.mView.setOnClickListener(new ShowCharacterDetailFragmentOnClickListener(
+        holder.update(character, new ShowCharacterDetailFragmentOnClickListener(
                 mSupportFragmentManagerRef.get(), mTwoPane, character.getUri()));
     }
 
