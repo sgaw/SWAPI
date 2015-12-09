@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import sgaw.playground.com.swapiapp.converters.JSONToCharacterList;
+import sgaw.playground.com.swapiapp.data.Universe;
 import sgaw.playground.com.swapiapp.dummy.DummyContent;
 
 import java.util.List;
@@ -33,8 +34,6 @@ import sgaw.playground.com.swapiapp.data.FilmCharacter;
  * item details side-by-side using two vertical panes.
  */
 public class CharacterListActivity extends AppCompatActivity {
-    private JSONToCharacterList mConverter = new JSONToCharacterList();
-    private static CircularArray<FilmCharacter> sCharacters = null;
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -50,17 +49,6 @@ public class CharacterListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
-
-        if (sCharacters == null) {
-            JSONObject result = mConverter.readAsset(this);
-            try {
-                sCharacters = mConverter.apply(result);
-            } catch (JSONException e) {
-                Log.e("CharacterListActivity", e.getMessage());
-                sCharacters = new CircularArray<>(0);
-            }
-        }
-        Log.d("CharacterListActivity", sCharacters.size() + " characters read");
 
         View recyclerView = findViewById(R.id.character_list);
         assert recyclerView != null;
@@ -106,7 +94,8 @@ public class CharacterListActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(CharacterDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        arguments.putString(CharacterDetailFragment.ARG_CHARACTER_ID,
+                                "stubCharacterId");
                         CharacterDetailFragment fragment = new CharacterDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
@@ -115,7 +104,8 @@ public class CharacterListActivity extends AppCompatActivity {
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, CharacterDetailActivity.class);
-                        intent.putExtra(CharacterDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        intent.putExtra(CharacterDetailFragment.ARG_CHARACTER_ID,
+                                "stubCharacterId");
 
                         context.startActivity(intent);
                     }

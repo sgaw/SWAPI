@@ -1,56 +1,42 @@
 package sgaw.playground.com.swapiapp.converters;
 
-import android.content.Context;
 import android.support.v4.util.CircularArray;
-
-import sgaw.playground.com.swapiapp.data.FilmCharacter;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
+import sgaw.playground.com.swapiapp.data.FilmCharacter;
 
 /**
  * Converter from asset file to list of Character POJOs.
  */
 public class JSONToCharacterList {
-    private static final String ASSET = "CachedPeople.json";
+    private static final String TAG = "JSONToCharacterList";
     JSONToCharacter converter = new JSONToCharacter();
 
-    public CircularArray<FilmCharacter> apply(JSONObject jsonObject) throws JSONException {
-        CircularArray<FilmCharacter> result = new CircularArray<>(10);
-        JSONArray jsonArray = jsonObject.getJSONArray("results");
+    /**
+     * Find the result array and convert the characters into POJO data objects.
+     *
+     * @param jsonObject to conver
+     * @param characters output list
+     * @return
+     */
+    public CircularArray<FilmCharacter> apply(JSONObject jsonObject,
+                                              CircularArray<FilmCharacter> characters) {
+
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = jsonObject.getJSONArray("results");
         for (int i = 0; i < jsonArray.length(); i++) {
             jsonObject = jsonArray.getJSONObject(i);
             FilmCharacter filmCharacter = converter.apply(jsonObject);
-            result.addLast(filmCharacter);
+            characters.addLast(filmCharacter);
         }
-        return  result;
-    }
-
-    public static JSONObject readAsset(Context context) {
-        StringWriter writer = new StringWriter();
-        try {
-            InputStream inputStream = context.getResources().getAssets()
-                    .open(ASSET);
-            while (inputStream.available() > 0) {
-                writer.write(inputStream.read());
-            }
-            inputStream.close();
-            writer.close();
-            String jsonString = writer.toString();
-            try {
-                return new JSONObject(jsonString);
-            } catch (JSONException je) {
-                je.printStackTrace();
-            }
-
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (JSONException e) {
+            Log.e(TAG, "Parse exception", e);
         }
-        return null;
+        return  characters;
     }
 }

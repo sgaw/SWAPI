@@ -14,10 +14,12 @@ public class JSONToCharacter {
 
     public FilmCharacter apply(JSONObject json) throws JSONException {
         FilmCharacter.Builder builder = FilmCharacter.newBuilder()
+                .setName(json.getString("name"))
                 .setHeight(Integer.parseInt(json.getString("height")))
                 .setMass(Integer.parseInt(json.getString("mass")))
                 .setBirthYear(json.getString("birth_year"))
-                .setGender(convertGender(json.getString("gender")));
+                .setGender(convertGender(json.getString("gender")))
+                .setUri(json.getString("url"));
 
         String [] hairStrs = json.getString("hair_color").split(",");
         builder.addHairColor(convertHairColor(hairStrs[0]));

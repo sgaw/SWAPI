@@ -10,6 +10,7 @@ import java.lang.annotation.RetentionPolicy;
  * POJO to represent a film character.
  */
 public class FilmCharacter {
+
     // Replacement for enums in Android
     @IntDef({GENDER_MALE,
             GENDER_FEMALE,
@@ -54,21 +55,27 @@ public class FilmCharacter {
     public static final @ColorInt int EYE_BROWN = 0x795548;
     public static final @ColorInt int EYE_GREY = 0x607D8B;
 
+    private final String mName;
+
+
     private final int mHeight;
     private final int mMass;
     private @HairColor int [] mHairColor;
     private @EyeColor int mEyeColor ;
     private final String mBirthYear;
     private final @Gender int mGender;
+    private final String mUri;
 
-    public FilmCharacter(int height, int mass, @HairColor int[] hairColor,
-                         @EyeColor int eyeColor, String birthYear, int gender) {
+    public FilmCharacter(String name, int height, int mass, @HairColor int[] hairColor,
+                         @EyeColor int eyeColor, String birthYear, int gender, String uri) {
+        this.mName = name;
         this.mHeight = height;
         this.mMass = mass;
         this.mHairColor = hairColor;
         this.mEyeColor = eyeColor;
         this.mBirthYear = birthYear;
         this.mGender = gender;
+        this.mUri = uri;
     }
 
     @Override
@@ -95,6 +102,40 @@ public class FilmCharacter {
         return new Builder();
     }
 
+    public String getName() {
+        return mName;
+    }
+
+    public @Gender int getGender() {
+        return mGender;
+    }
+
+    public int getHeight() {
+        return mHeight;
+    }
+
+    public int getMass() {
+        return mMass;
+    }
+
+    public @HairColor int[] getHairColor() {
+        return mHairColor;
+    }
+
+    public @EyeColor int getEyeColor() {
+        return mEyeColor;
+    }
+
+    public String getBirthYear() {
+        return mBirthYear;
+    }
+
+
+    public String getUri() {
+        return mUri;
+    }
+
+
     /**
      * Builder for a Character POJO.
      */
@@ -106,6 +147,8 @@ public class FilmCharacter {
         private int mEyeColor;
         private String mBirthYear;
         private int mGender;
+        private String mUri;
+        private String mName;
 
         public Builder setHeight(int height) {
             mHeight = height;
@@ -143,8 +186,19 @@ public class FilmCharacter {
 
         public FilmCharacter build() {
             assert(mBirthYear != null && !mBirthYear.isEmpty());
-            return new FilmCharacter(mHeight, mMass, mHairColor, mEyeColor, mBirthYear,
-                    mGender);
+            assert(mUri != null && !mUri.isEmpty());
+            return new FilmCharacter(mName, mHeight, mMass, mHairColor, mEyeColor, mBirthYear,
+                    mGender, mUri);
+        }
+
+        public Builder setName(String name) {
+            mName = name;
+            return this;
+        }
+
+        public Builder setUri(String uri) {
+            mUri = uri;
+            return this;
         }
     }
 }
