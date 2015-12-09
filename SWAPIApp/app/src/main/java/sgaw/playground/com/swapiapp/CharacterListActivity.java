@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import sgaw.playground.com.swapiapp.data.Universe;
 import sgaw.playground.com.swapiapp.dummy.DummyContent;
 
 import java.util.List;
@@ -25,6 +28,11 @@ import java.util.List;
  */
 public class CharacterListActivity extends AppCompatActivity {
 
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @Bind(R.id.character_list)
+    RecyclerView mRecyclerView;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -35,14 +43,14 @@ public class CharacterListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_list);
+        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitle(getTitle());
 
-        View recyclerView = findViewById(R.id.character_list);
-        assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+        assert mRecyclerView != null;
+        setupRecyclerView(mRecyclerView);
 
         if (findViewById(R.id.character_detail_container) != null) {
             // The detail container view will be present only in the
@@ -54,64 +62,7 @@ public class CharacterListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(DummyContent.ITEMS,
-                new ShowCharacterDetailFragmentOnClickListener(
-                        getSupportFragmentManager(), mTwoPane,
-                        "http://swapi.co/api/people/9/")));
+        recyclerView.setAdapter(new CharacterRecyclerViewAdapter(getSupportFragmentManager(),
+                mTwoPane, Universe.get(this).getCharacters()));
     }
-
-    public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
-
-        private final List<DummyContent.DummyItem> mValues;
-        private final View.OnClickListener mViewClickListener;
-
-        public SimpleItemRecyclerViewAdapter(List<DummyContent.DummyItem> items,
-                                             View.OnClickListener viewClickListener) {
-            mValues = items;
-            mViewClickListener = viewClickListener;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.character_list_content, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
-
-            holder.mView.setOnClickListener(mViewClickListener);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mValues.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View mView;
-            public final TextView mIdView;
-            public final TextView mContentView;
-            public DummyContent.DummyItem mItem;
-
-            public ViewHolder(View view) {
-                super(view);
-                mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
-            }
-
-            @Override
-            public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
-            }
-        }
-
-    }
-
 }

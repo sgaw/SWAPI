@@ -60,6 +60,10 @@ public class Universe {
         return null;
     }
 
+    public CircularArray<FilmCharacter> getCharacters() {
+        return mCharacters;
+    }
+
     public FilmCharacter getCharacter(String uri) {
         // Inefficient but there's not that much data, I expect
         for (int i = 0; i < mCharacters.size(); i++) {
