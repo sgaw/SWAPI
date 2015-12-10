@@ -6,6 +6,8 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import sgaw.playground.com.swapiapp.BuildConfig;
+
 /**
  * POJO to represent a film character.
  */
@@ -143,8 +145,8 @@ public class FilmCharacter {
         private int mHeight;
         private int mMass;
         // Only support max two hair colors, two eye colors
-        private int [] mHairColor = new int[]{-1, -1};
-        private int mEyeColor;
+        private @HairColor int [] mHairColor = new int[]{-1, -1};
+        private @EyeColor int mEyeColor;
         private String mBirthYear;
         private int mGender;
         private String mUri;
@@ -184,9 +186,15 @@ public class FilmCharacter {
             return this;
         }
 
+        @SuppressWarnings("WrongConstant")
         public FilmCharacter build() {
-            assert(mBirthYear != null && !mBirthYear.isEmpty());
-            assert(mUri != null && !mUri.isEmpty());
+            if (BuildConfig.DEBUG) {
+                if (mBirthYear == null || mBirthYear.isEmpty()
+                        || (mUri == null) || mUri.isEmpty()) {
+                    throw new IllegalStateException("Expected properties were not set");
+                }
+            }
+
             return new FilmCharacter(mName, mHeight, mMass, mHairColor, mEyeColor, mBirthYear,
                     mGender, mUri);
         }
