@@ -1,6 +1,8 @@
 package sgaw.playground.com.swapiapp;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -8,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -41,7 +44,7 @@ public class CharacterDetailFragment extends Fragment {
     TextView mTextViewBirthYear;
 
     @Bind(R.id.text_view_eye)
-    TextView mTextViewEye;
+    TextView mImageViewEye;
 
     @Bind(R.id.text_view_hair)
     TextView mTextViewHair;
@@ -50,6 +53,7 @@ public class CharacterDetailFragment extends Fragment {
         void setBirthYear(String birthYear, TextView textView);
         void setHeight(int height, TextView textView);
         void setWeight(int weight, TextView textView);
+        void setEyeColor(@FilmCharacter.EyeColor int eyeColor, TextView textView);
     }
 
     private FilmCharacter mCharacter = null;
@@ -99,6 +103,7 @@ public class CharacterDetailFragment extends Fragment {
         mPresenter.setBirthYear(mCharacter.getBirthYear(), mTextViewBirthYear);
         mPresenter.setHeight(mCharacter.getHeight(), mTextViewHeight);
         mPresenter.setWeight(mCharacter.getMass(), mTextViewWeight);
+        mPresenter.setEyeColor(mCharacter.getEyeColor(), mImageViewEye);
     }
 
     @VisibleForTesting
@@ -117,6 +122,13 @@ public class CharacterDetailFragment extends Fragment {
         @Override
         public void setWeight(int weight, TextView textView) {
             textView.setText(String.valueOf(weight));
+        }
+
+        @Override
+        public void setEyeColor(@FilmCharacter.EyeColor int eyeColor, TextView textView) {
+            // BUGBUG(sgaw): I wanted to recolor the image but I was having trouble with
+            // Drawable.mutate().setTintList() and also Drawable.setColorFilter(
+            textView.getCompoundDrawables()[3].setTint(eyeColor);
         }
     }
 }
