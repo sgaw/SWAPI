@@ -20,16 +20,16 @@ public class CircularArrayWrapper<E> implements ICircularArray<E> {
     }
     @Override
     public int size() {
-        return 0;
+        return mCircularArray.size();
     }
 
     @Override
     public void addLast(E e) {
-
+        mCircularArray.addLast(e);
     }
 
     @Override
     public E get(int n) {
-        return null;
+        return mCircularArray.get(n);
     }
 }
