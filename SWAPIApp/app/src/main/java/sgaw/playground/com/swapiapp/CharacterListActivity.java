@@ -42,7 +42,6 @@ public class CharacterListActivity extends AppCompatActivity {
         mToolbar.setTitle(getTitle());
 
         assert mRecyclerView != null;
-        setupRecyclerView(mRecyclerView);
 
         if (findViewById(R.id.character_detail_container) != null) {
             // The detail container view will be present only in the
@@ -51,6 +50,7 @@ public class CharacterListActivity extends AppCompatActivity {
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+        setupRecyclerView(mRecyclerView);
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
