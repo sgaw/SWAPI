@@ -29,7 +29,6 @@ public class CharacterDetailFragment extends Fragment {
                     .setUri("http://fixme.com")
                     .setBirthYear("badyear")
                     .build();
-    private static final String BUNDLE_CHARACTER_URI = "character_uri";
 
     @Bind(R.id.character_detail)
     TextView mTextView;
