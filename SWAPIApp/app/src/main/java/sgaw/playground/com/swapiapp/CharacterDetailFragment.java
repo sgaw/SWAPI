@@ -1,8 +1,6 @@
 package sgaw.playground.com.swapiapp;
 
 import android.app.Activity;
-import android.content.res.ColorStateList;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -10,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.Bind;
