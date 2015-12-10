@@ -54,6 +54,7 @@ public class CharacterDetailFragment extends Fragment {
         void setHeight(int height, TextView textView);
         void setWeight(int weight, TextView textView);
         void setEyeColor(@FilmCharacter.EyeColor int eyeColor, TextView textView);
+        void setHairColor(@FilmCharacter.HairColor int[] hairColor, TextView textView);
     }
 
     private FilmCharacter mCharacter = null;
@@ -104,6 +105,7 @@ public class CharacterDetailFragment extends Fragment {
         mPresenter.setHeight(mCharacter.getHeight(), mTextViewHeight);
         mPresenter.setWeight(mCharacter.getMass(), mTextViewWeight);
         mPresenter.setEyeColor(mCharacter.getEyeColor(), mImageViewEye);
+        mPresenter.setHairColor(mCharacter.getHairColor(), mTextViewHair);
     }
 
     @VisibleForTesting
@@ -126,9 +128,16 @@ public class CharacterDetailFragment extends Fragment {
 
         @Override
         public void setEyeColor(@FilmCharacter.EyeColor int eyeColor, TextView textView) {
-            // BUGBUG(sgaw): I wanted to recolor the image but I was having trouble with
-            // Drawable.mutate().setTintList() and also Drawable.setColorFilter(
             textView.getCompoundDrawables()[3].setTint(eyeColor);
+        }
+
+        @Override
+        public void setHairColor(@FilmCharacter.HairColor int[] hairColor, TextView textView) {
+            if (hairColor[0] == FilmCharacter.HAIR_NONE) {
+                textView.setCompoundDrawables(null, null, null, null);
+            } else {
+                textView.getCompoundDrawables()[3].setTint(hairColor[0]);
+            }
         }
     }
 }

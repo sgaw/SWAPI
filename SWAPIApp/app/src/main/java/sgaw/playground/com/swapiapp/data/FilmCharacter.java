@@ -33,13 +33,13 @@ public class FilmCharacter {
             HAIR_GREY})
     @Retention(RetentionPolicy.SOURCE)
     public @interface HairColor {}
-    public static final @ColorInt int HAIR_NONE = 0xE91E63; // Pink
-    public static final @ColorInt int HAIR_BLACK = 0x000000;
-    public static final @ColorInt int HAIR_BLONDE = 0xFFEB3B;
-    public static final @ColorInt int HAIR_RED = 0xF44336;
-    public static final @ColorInt int HAIR_WHITE = 0xFFFFFF;
-    public static final @ColorInt int HAIR_BROWN = 0x795548;
-    public static final @ColorInt int HAIR_GREY = 0x9E9E9E;
+    public static final @ColorInt int HAIR_NONE = 0xFFE91E63; // Pink
+    public static final @ColorInt int HAIR_BLACK = 0xFF000000;
+    public static final @ColorInt int HAIR_BLONDE = 0xFFFFEB3B;
+    public static final @ColorInt int HAIR_RED = 0xFFF44336;
+    public static final @ColorInt int HAIR_WHITE = 0xFFFFFFFF;
+    public static final @ColorInt int HAIR_BROWN = 0xFF795548;
+    public static final @ColorInt int HAIR_GREY = 0xFF9E9E9E;
 
 
     @IntDef({EYE_NONE,
