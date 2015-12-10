@@ -2,7 +2,6 @@ package sgaw.playground.com.swapiapp.data;
 
 import android.content.Context;
 import android.support.annotation.VisibleForTesting;
-import android.support.v4.util.CircularArray;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +11,8 @@ import java.io.InputStream;
 import java.io.StringWriter;
 
 import sgaw.playground.com.swapiapp.converters.JSONToCharacterList;
+import sgaw.playground.com.swapiapp.util.CircularArrayWrapper;
+import sgaw.playground.com.swapiapp.util.ICircularArray;
 
 /**
  * Created by shirleygaw on 09/12/15.

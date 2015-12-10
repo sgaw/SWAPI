@@ -1,7 +1,6 @@
 package sgaw.playground.com.swapiapp;
 
 import android.support.v4.app.FragmentManager;
-import android.support.v4.util.CircularArray;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +8,8 @@ import android.view.ViewGroup;
 
 import java.lang.ref.WeakReference;
 
-import sgaw.playground.com.swapiapp.data.CircularArrayWrapper;
 import sgaw.playground.com.swapiapp.data.FilmCharacter;
-import sgaw.playground.com.swapiapp.data.ICircularArray;
-import sgaw.playground.com.swapiapp.data.Universe;
+import sgaw.playground.com.swapiapp.util.ICircularArray;
 
 /**
  * {@link android.support.v7.widget.RecyclerView.Adapter} for binding {@link FilmCharacter}

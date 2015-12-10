@@ -1,6 +1,5 @@
 package sgaw.playground.com.swapiapp.converters;
 
-import android.support.v4.util.CircularArray;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -8,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import sgaw.playground.com.swapiapp.data.FilmCharacter;
-import sgaw.playground.com.swapiapp.data.ICircularArray;
+import sgaw.playground.com.swapiapp.util.ICircularArray;
 
 /**
  * Converter from asset file to list of Character POJOs.

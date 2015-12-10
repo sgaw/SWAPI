@@ -1,7 +1,5 @@
 package sgaw.playground.com.swapiapp;
 
-import android.support.v4.util.CircularArray;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +10,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import sgaw.playground.com.swapiapp.data.FilmCharacter;
-import sgaw.playground.com.swapiapp.data.ICircularArray;
+import sgaw.playground.com.swapiapp.util.ICircularArray;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;

@@ -1,4 +1,4 @@
-package sgaw.playground.com.swapiapp.data;
+package sgaw.playground.com.swapiapp.util;
 
 /**
  * Exposed circular array interface used in this app.

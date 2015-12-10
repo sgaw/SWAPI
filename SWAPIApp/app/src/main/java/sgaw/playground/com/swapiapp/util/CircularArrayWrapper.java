@@ -1,6 +1,8 @@
-package sgaw.playground.com.swapiapp.data;
+package sgaw.playground.com.swapiapp.util;
 
 import android.support.v4.util.CircularArray;
+
+import sgaw.playground.com.swapiapp.util.ICircularArray;
 
 /**
  * Wrapper for {@link android.support.v4.util.CircularArray} that has a mockable
