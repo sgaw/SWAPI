@@ -2,6 +2,7 @@ package sgaw.playground.com.swapiapp;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -30,10 +31,29 @@ public class CharacterDetailFragment extends Fragment {
                     .setBirthYear("badyear")
                     .build();
 
-    @Bind(R.id.character_detail)
-    TextView mTextView;
+    @Bind(R.id.text_view_height)
+    TextView mTextViewHeight;
+
+    @Bind(R.id.text_view_weight)
+    TextView mTextViewWeight;
+
+    @Bind(R.id.text_view_birth_year)
+    TextView mTextViewBirthYear;
+
+    @Bind(R.id.text_view_eye)
+    TextView mTextViewEye;
+
+    @Bind(R.id.text_view_hair)
+    TextView mTextViewHair;
+
+    public interface ICharacterDetailPresenter {
+        void setBirthYear(String birthYear, TextView textView);
+        void setHeight(int height, TextView textView);
+        void setWeight(int weight, TextView textView);
+    }
 
     private FilmCharacter mCharacter = null;
+    private ICharacterDetailPresenter mPresenter = new CharacterDetailPresenter();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -62,8 +82,8 @@ public class CharacterDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.character_detail, container, false);
 
         ButterKnife.bind(this, rootView);
-        mTextView.setText(mCharacter.getBirthYear());
 
+        updateViews();
 
         Activity activity = this.getActivity();
         if (activity instanceof  CharacterDetailActivity) {
@@ -73,5 +93,30 @@ public class CharacterDetailFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    private void updateViews() {
+        mPresenter.setBirthYear(mCharacter.getBirthYear(), mTextViewBirthYear);
+        mPresenter.setHeight(mCharacter.getHeight(), mTextViewHeight);
+        mPresenter.setWeight(mCharacter.getMass(), mTextViewWeight);
+    }
+
+    @VisibleForTesting
+    class CharacterDetailPresenter implements ICharacterDetailPresenter {
+
+        @Override
+        public void setBirthYear(String birthYear, TextView textView) {
+            textView.setText(birthYear);
+        }
+
+        @Override
+        public void setHeight(int height, TextView textView) {
+            textView.setText(String.valueOf(height));
+        }
+
+        @Override
+        public void setWeight(int weight, TextView textView) {
+            textView.setText(String.valueOf(weight));
+        }
     }
 }

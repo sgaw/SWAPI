@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">SWAPI App</string>
     <string name="title_character_detail">Character Detail</string>
+    <string name="msg_recognizable_features">Recognizable features</string>
+    <string name="msg_basic_stats">Basic details</string>
+    <string name="msg_eye_color">Eye color</string>
+    <string name="msg_hair_color">Hair color</string>
+    <string name="msg_height">Height</string>
+    <string name="msg_weight">Weight</string>
+    <string name="msg_birth_year">Birth year</string>
 </resources>
