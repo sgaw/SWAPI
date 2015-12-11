@@ -41,7 +41,7 @@ public class JSONToCharacter {
             return FilmCharacter.HAIR_BLACK;
         }
 
-        if (hair_color.equals("blonde")) {
+        if (hair_color.equals("blond")) {
             return FilmCharacter.HAIR_BLONDE;
         }
 

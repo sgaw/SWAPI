@@ -14,7 +14,7 @@ import com.google.common.collect.ImmutableMap;
  */
 public class JSONToCharacterTest {
     ImmutableMap<String, Integer> HAIR_MAP = ImmutableMap.<String, Integer>builder()
-            .put("blonde", 0xFFEB3B)
+            .put("blond", 0xFFEB3B)
             .put("black", 0x000000)
             .put("auburn", 0xF44336)
             .put("white", 0xFFFFFF)
