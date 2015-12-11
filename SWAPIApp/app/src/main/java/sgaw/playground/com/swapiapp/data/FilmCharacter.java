@@ -50,10 +50,10 @@ public class FilmCharacter {
             EYE_GREY})
     @Retention(RetentionPolicy.SOURCE)
     public @interface EyeColor {}
-    public static final int EYE_NONE = 0xE91E63;  // Pink
+    public static final int EYE_NONE = 0xFFE91E63;  // Pink
     public static final @ColorInt int EYE_BLUE = 0xFF2196F3;
     public static final @ColorInt int EYE_YELLOW = 0xFFFFEB3B;
-    public static final @ColorInt int EYE_RED = 0xFFF44336;
+    public static final @ColorInt int EYE_RED = 0xFFFF4444;
     public static final @ColorInt int EYE_BROWN = 0xFF795548;
     public static final @ColorInt int EYE_GREY = 0xFF607D8B;
 

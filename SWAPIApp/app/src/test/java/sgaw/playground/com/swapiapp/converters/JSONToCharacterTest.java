@@ -14,22 +14,22 @@ import com.google.common.collect.ImmutableMap;
  */
 public class JSONToCharacterTest {
     ImmutableMap<String, Integer> HAIR_MAP = ImmutableMap.<String, Integer>builder()
-            .put("blond", 0xFFEB3B)
-            .put("black", 0x000000)
-            .put("auburn", 0xF44336)
-            .put("white", 0xFFFFFF)
-            .put("grey", 0x9E9E9E)
-            .put("brown", 0x795548)
-            .put("n/a", 0xE91E63)
-            .put("none", 0xE91E63)
+            .put("blond", 0xFFFFEB3B)
+            .put("black", 0xFF000000)
+            .put("auburn", 0xFFF44336)
+            .put("white", 0xFFFFFFFF)
+            .put("grey", 0xFF9E9E9E)
+            .put("brown", 0xFF795548)
+            .put("n/a", 0xFFE91E63)
+            .put("none", 0xFFE91E63)
             .build();
     ImmutableMap<String, Integer> EYE_MAP = ImmutableMap.<String, Integer>builder()
-            .put("blue", 0x2196F3)
-            .put("yellow", 0xFFEB3B)
-            .put("red", 0xF44336)
-            .put("brown", 0x795548)
-            .put("blue-grey", 0x607D8B)
-            .put("n/a", 0xE91E63)
+            .put("blue", 0xFF2196F3)
+            .put("yellow", 0xFFFFEB3B)
+            .put("red", 0xFFFF4444)
+            .put("brown", 0xFF795548)
+            .put("blue-grey", 0xFF607D8B)
+            .put("n/a", 0xFFE91E63)
             .build();
 
     private JSONObject jsonCharacter;
