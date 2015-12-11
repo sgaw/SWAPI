@@ -15,6 +15,7 @@
         android:text="@string/msg_basic_stats"
         tools:text="Basic stats"/>
     <LinearLayout
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -72,7 +73,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/msg_recognizable_features"
-        android:layout_below="@id/text_view_recognize_label"
         tools:text="How to recognize"/>
     <LinearLayout
         android:layout_width="match_parent"
