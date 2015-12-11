@@ -1,0 +1,15 @@
+language: android
+script: ./SWAPIApp/gradlew check
+sudo: false
+before_install:
+  - echo yes | android update sdk --filter extra-android-support --no-ui --force > /dev/null
+  - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
+android:
+  components:
+     - platform-tools
+     - tools
+     - build-tools-20.0.0
+     - android-21
+     - sys-img-armeabi-v7a-android-19
+     - sys-img-x86-android-17
+     - extra-android-support
