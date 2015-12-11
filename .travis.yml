@@ -1,5 +1,5 @@
 language: android
-script: ./SWAPIApp/gradlew check
+script: ./gradlew check
 sudo: false
 before_install:
   - echo yes | android update sdk --filter extra-android-support --no-ui --force > /dev/null
