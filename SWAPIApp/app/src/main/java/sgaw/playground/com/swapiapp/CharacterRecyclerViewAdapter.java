@@ -1,5 +1,6 @@
 package sgaw.playground.com.swapiapp;
 
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,15 +17,14 @@ import sgaw.playground.com.swapiapp.util.ICircularArray;
  * to their respective view holders.
  */
 public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<CharacterViewHolder> {
-    private final WeakReference<FragmentManager> mSupportFragmentManagerRef;
-    private final boolean mTwoPane;
+    @VisibleForTesting
+    final CharacterListActivity.ICharacterDetailLauncher mCharacterDetailLauncher;
     private final ICircularArray<FilmCharacter> mCharacters;
 
-    public CharacterRecyclerViewAdapter(FragmentManager supportFragmentManager,
-                                        boolean twoPane,
-                                        ICircularArray<FilmCharacter> characters) {
-        mSupportFragmentManagerRef = new WeakReference<>(supportFragmentManager);
-        mTwoPane = twoPane;
+    public CharacterRecyclerViewAdapter(
+            CharacterListActivity.ICharacterDetailLauncher characterDetailLauncher,
+            ICircularArray<FilmCharacter> characters) {
+        mCharacterDetailLauncher = characterDetailLauncher;
         mCharacters = characters;
     }
 
@@ -38,9 +38,13 @@ public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<Character
 
     @Override
     public void onBindViewHolder(CharacterViewHolder holder, int position) {
-        FilmCharacter character = mCharacters.get(position);
-        holder.update(character, new ShowCharacterDetailFragmentOnClickListener(
-                mSupportFragmentManagerRef.get(), mTwoPane, character.getUri()));
+        final FilmCharacter character = mCharacters.get(position);
+        holder.update(character, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCharacterDetailLauncher.show(character);
+            }
+        });
     }
 
     @Override

@@ -36,7 +36,7 @@ public class CharacterViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void update(FilmCharacter character,
-                       ShowCharacterDetailFragmentOnClickListener listener) {
+                       View.OnClickListener listener) {
         mIdView.setText(character.getBirthYear());
         mContentView.setText(character.getName());
         mView.setOnClickListener(listener);

@@ -1,5 +1,7 @@
 package sgaw.playground.com.swapiapp;
 
+import android.view.View;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,8 +29,10 @@ public class CharacterRecyclerViewAdapterTest {
     private CharacterRecyclerViewAdapter underTest;
     @Mock
     CharacterViewHolder mockViewHolder;
+    @Mock
+    CharacterListActivity.ICharacterDetailLauncher mockLauncher;
     @Captor
-    ArgumentCaptor<ShowCharacterDetailFragmentOnClickListener> captor;
+    ArgumentCaptor<View.OnClickListener> captor;
 
     @Before
     public void setupData() {
@@ -56,8 +60,7 @@ public class CharacterRecyclerViewAdapterTest {
 
         };
 
-        underTest = new CharacterRecyclerViewAdapter(null, false,
-                mData);
+        underTest = new CharacterRecyclerViewAdapter(mockLauncher, mData);
     }
 
     @Before
@@ -70,8 +73,12 @@ public class CharacterRecyclerViewAdapterTest {
         underTest.onBindViewHolder(mockViewHolder, 10);
 
         verify(mockViewHolder).update(eq(mCharacter), captor.capture());
-        assertTrue(mCharacter.getUri().equals(captor.getValue().mCharacterUri));
+        assertNotNull(captor.getValue());
         verifyNoMoreInteractions(mockViewHolder);
+
+        captor.getValue().onClick(null);
+        // BUGBUG(sgaw): Why doesn't the captor's value == mockLauncher?
+        verify(underTest.mCharacterDetailLauncher).show(mCharacter);
     }
 
     @Test

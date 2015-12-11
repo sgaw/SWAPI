@@ -38,16 +38,20 @@ public class CharacterViewHolderTest {
 
     @Test
     public void testUpdate() throws Exception {
-        ShowCharacterDetailFragmentOnClickListener listener =
-                new ShowCharacterDetailFragmentOnClickListener(null, false, null);
+        View.OnClickListener stubListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // no-op
+            }
+        };
         underTest.update(FilmCharacter.newBuilder()
                 .setName("foo")
                 .setBirthYear("bar")
                 .setUri("blah")
-                .build(), listener);
+                .build(), stubListener);
         verify(mockTextView).setText("bar");
         verify(mockTextView2).setText("foo");
-        verify(mockView).setOnClickListener(listener);
+        verify(mockView).setOnClickListener(stubListener);
         verifyNoMoreInteractions(mockView, mockTextView, mockTextView2);
     }
 }

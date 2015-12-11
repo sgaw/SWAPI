@@ -1,13 +1,21 @@
 package sgaw.playground.com.swapiapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import sgaw.playground.com.swapiapp.data.FilmCharacter;
 import sgaw.playground.com.swapiapp.data.Universe;
 
 /**
@@ -20,16 +28,24 @@ import sgaw.playground.com.swapiapp.data.Universe;
  */
 public class CharacterListActivity extends AppCompatActivity {
 
+    /**
+     * When the user clicks on a character in a list, show the character's details.
+     *
+     * Implementation is dependent on screen size, say tablet versus phone.
+     */
+    public interface ICharacterDetailLauncher {
+        void show(FilmCharacter character);
+    }
+
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
     @Bind(R.id.character_list)
     RecyclerView mRecyclerView;
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
+
+    // Only available on large screens
+    @Nullable @Bind(R.id.character_detail_container)
+    View mDetailsPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +59,63 @@ public class CharacterListActivity extends AppCompatActivity {
 
         assert mRecyclerView != null;
 
-        if (findViewById(R.id.character_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
-        }
         setupRecyclerView(mRecyclerView);
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new CharacterRecyclerViewAdapter(getSupportFragmentManager(),
-                mTwoPane, Universe.get(this).getCharacters()));
+        ICharacterDetailLauncher launcher;
+        if (mDetailsPane != null) {
+            launcher = new FragmentCharacterDetailLauncher(
+                    getSupportFragmentManager());
+        } else {
+            launcher = new ActivityCharacterDetailLauncher(this);
+        }
+
+        recyclerView.setAdapter(new CharacterRecyclerViewAdapter(launcher,
+                Universe.get(this).getCharacters()));
+    }
+
+    /**
+     * Wrapper to show the specified character's information in a fragment for large screens
+     * (master-detail view).
+     */
+    private class FragmentCharacterDetailLauncher implements ICharacterDetailLauncher {
+        private final WeakReference<FragmentManager> mSupportFragmentManagerRef;
+
+        public FragmentCharacterDetailLauncher(FragmentManager supportFragmentManager) {
+            mSupportFragmentManagerRef = new WeakReference<>(supportFragmentManager);
+        }
+
+        @Override
+        public void show(FilmCharacter character) {
+            Bundle arguments = new Bundle();
+            arguments.putString(CharacterDetailFragment.ARG_CHARACTER_ID,
+                    character.getUri());
+            CharacterDetailFragment fragment = new CharacterDetailFragment();
+            fragment.setArguments(arguments);
+            mSupportFragmentManagerRef.get().beginTransaction()
+                    .replace(R.id.character_detail_container, fragment)
+                    .commit();
+        }
+    }
+
+    /**
+     * Wrapper to show the specified character's information in another screen (activity).
+     */
+    private class ActivityCharacterDetailLauncher implements ICharacterDetailLauncher {
+        private final WeakReference<Context> mContextRef;
+
+        private ActivityCharacterDetailLauncher(Context context) {
+            mContextRef = new WeakReference<>(context);
+        }
+
+        @Override
+        public void show(FilmCharacter character) {
+            Context context = mContextRef.get();
+            Intent intent = new Intent(context, CharacterDetailActivity.class);
+            intent.putExtra(CharacterDetailFragment.ARG_CHARACTER_ID,
+                    character.getUri());
+            context.startActivity(intent);
+        }
     }
 }
