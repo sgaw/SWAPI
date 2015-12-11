@@ -57,8 +57,6 @@ public class CharacterListActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setTitle(getTitle());
 
-        assert mRecyclerView != null;
-
         setupRecyclerView(mRecyclerView);
     }
 
