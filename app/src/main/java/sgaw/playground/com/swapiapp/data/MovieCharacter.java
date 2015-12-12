@@ -52,6 +52,10 @@ public class MovieCharacter {
         return hairColorToColorRes(hair_color);
     }
 
+    private @ColorRes int eyeColorToColorRes(String string) {
+        return R.color.clear;
+    }
+
     private @ColorRes int hairColorToColorRes(String string) {
         String hair = string.split(",")[0]; // ignore other descriptors
         if (hair.equals("black")) {
