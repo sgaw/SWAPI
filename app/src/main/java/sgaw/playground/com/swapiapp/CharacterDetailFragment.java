@@ -127,9 +127,13 @@ public class CharacterDetailFragment extends Fragment {
 
         @Override
         public void setHairColor(@ColorRes int hairColor, TextView textView) {
-            @SuppressWarnings("deprecation")
-            @ColorInt int color = textView.getContext().getResources().getColor(hairColor);
-            textView.getCompoundDrawables()[3].setTint(color);
+            if (hairColor == R.color.clear) {
+                textView.getCompoundDrawables()[3].setVisible(false, false);
+            } else {
+                @SuppressWarnings("deprecation")
+                @ColorInt int color = textView.getContext().getResources().getColor(hairColor);
+                textView.getCompoundDrawables()[3].setTint(color);
+            }
         }
     }
 }
