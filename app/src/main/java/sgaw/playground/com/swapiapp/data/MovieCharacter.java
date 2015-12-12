@@ -45,14 +45,34 @@ public class MovieCharacter {
     }
 
     public @ColorRes int getEyeColor() {
-        return android.R.color.holo_purple;
+        return eyeColorToColorRes(eye_color);
     }
 
     public @ColorRes int getHairColor() {
         return hairColorToColorRes(hair_color);
     }
 
-    private @ColorRes int eyeColorToColorRes(String string) {
+    private @ColorRes int eyeColorToColorRes(String eye) {
+        if (eye.equals("blue")) {
+            return R.color.blue;
+        }
+
+        if (eye.equals("yellow")) {
+            return R.color.yellow;
+        }
+
+        if (eye.equals("red")) {
+            return R.color.red;
+        }
+
+        if (eye.equals("brown")) {
+            return R.color.brown;
+        }
+
+        if (eye.equals("blue-grey")) {
+            return R.color.grey;
+        }
+
         return R.color.clear;
     }
 

@@ -1,7 +1,9 @@
 package sgaw.playground.com.swapiapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Movie;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
@@ -120,9 +122,9 @@ public class CharacterDetailFragment extends Fragment {
 
         @Override
         public void setEyeColor(@ColorRes int eyeColor, TextView textView) {
-            @SuppressWarnings("deprecation")
-            @ColorInt int color = textView.getContext().getResources().getColor(eyeColor);
-            textView.getCompoundDrawables()[3].setTint(color);
+            setColor(textView.getContext(),
+                    textView.getCompoundDrawables()[3],
+                    eyeColor);
         }
 
         @Override
@@ -130,10 +132,19 @@ public class CharacterDetailFragment extends Fragment {
             if (hairColor == R.color.clear) {
                 textView.setCompoundDrawables(null, null, null, null);
             } else {
-                @SuppressWarnings("deprecation")
-                @ColorInt int color = textView.getContext().getResources().getColor(hairColor);
-                textView.getCompoundDrawables()[3].setTint(color);
+                setColor(textView.getContext(),
+                        textView.getCompoundDrawables()[3],
+                        hairColor);
             }
+        }
+
+        @SuppressWarnings("deprecation")
+        private @ColorInt int colorResToColorInt(Context context, @ColorRes int colorRes) {
+            return context.getResources().getColor(colorRes);
+        }
+
+        private void setColor(Context context, Drawable drawable, @ColorRes int colorRes) {
+            drawable.setTint(colorResToColorInt(context, colorRes));
         }
     }
 }
