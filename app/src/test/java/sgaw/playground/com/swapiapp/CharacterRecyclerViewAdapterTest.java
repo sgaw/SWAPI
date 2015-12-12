@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import sgaw.playground.com.swapiapp.data.MovieCharacter;
 import sgaw.playground.com.swapiapp.util.ICircularArray;
 
 import static org.junit.Assert.*;
@@ -23,8 +24,8 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class CharacterRecyclerViewAdapterTest {
-    FilmCharacter mCharacter = null;
-    ICircularArray<FilmCharacter> mData = null;
+    MovieCharacter mCharacter = null;
+    ICircularArray<MovieCharacter> mData = null;
     private CharacterRecyclerViewAdapter underTest;
     @Mock
     CharacterViewHolder mockViewHolder;
@@ -35,15 +36,11 @@ public class CharacterRecyclerViewAdapterTest {
 
     @Before
     public void setupData() {
-        mCharacter = FilmCharacter.newBuilder()
-                .setName("Fake name")
-                .setUri("fakeuri")
-                .setBirthYear("fakeyear")
-                .build();
+        mCharacter = new MovieCharacter();
 
-        mData = new ICircularArray<FilmCharacter>() {
+        mData = new ICircularArray<MovieCharacter>() {
             @Override
-            public FilmCharacter get(int index) {
+            public MovieCharacter get(int index) {
                 return mCharacter;
             }
 
@@ -53,7 +50,7 @@ public class CharacterRecyclerViewAdapterTest {
             }
 
             @Override
-            public void addLast(FilmCharacter filmCharacter) {
+            public void addLast(MovieCharacter filmCharacter) {
                 throw new UnsupportedOperationException("not implemented");
             }
 

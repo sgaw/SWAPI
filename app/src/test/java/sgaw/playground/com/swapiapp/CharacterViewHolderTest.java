@@ -10,6 +10,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import sgaw.playground.com.swapiapp.data.MovieCharacter;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
@@ -41,10 +43,10 @@ public class CharacterViewHolderTest {
                 // no-op
             }
         };
-        underTest.update(FilmCharacter.newBuilder()
-                .setName("foo")
-                .setBirthYear("bar")
-                .build(), stubListener);
+        MovieCharacter character = new MovieCharacter();
+        character.setName("foo");
+        character.setBirthYear("bar");
+        underTest.update(character, stubListener);
         verify(mockTextView).setText("bar");
         verify(mockTextView2).setText("foo");
         verify(mockView).setOnClickListener(stubListener);

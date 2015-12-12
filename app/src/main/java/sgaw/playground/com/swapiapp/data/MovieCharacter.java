@@ -1,6 +1,7 @@
 package sgaw.playground.com.swapiapp.data;
 
 import android.support.annotation.ColorRes;
+import android.support.annotation.VisibleForTesting;
 
 import sgaw.playground.com.swapiapp.R;
 
@@ -29,11 +30,21 @@ public class MovieCharacter {
     }
 
     public String getBirthYear() {
-        return gender;
+        return birth_year;
+    }
+
+    @VisibleForTesting
+    public void setBirthYear(String birthYear) {
+        this.birth_year = birthYear;
     }
 
     public String getName() {
         return name;
+    }
+
+    @VisibleForTesting
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getHeight() {
@@ -44,6 +55,11 @@ public class MovieCharacter {
         return mass;
     }
 
+    @VisibleForTesting
+    void setEyeColor(String eyeColor) {
+        this.eye_color = eyeColor;
+    }
+
     public @ColorRes int getEyeColor() {
         return eyeColorToColorRes(eye_color);
     }
@@ -52,7 +68,14 @@ public class MovieCharacter {
         return hairColorToColorRes(hair_color);
     }
 
-    private @ColorRes int eyeColorToColorRes(String eye) {
+    @VisibleForTesting
+    void setHairColor(String hairColor) {
+        this.hair_color = hairColor;
+    }
+
+
+    @VisibleForTesting
+    @ColorRes int eyeColorToColorRes(String eye) {
         if (eye.equals("blue")) {
             return R.color.blue;
         }
@@ -73,10 +96,11 @@ public class MovieCharacter {
             return R.color.grey;
         }
 
-        return R.color.clear;
+        return R.color.none;
     }
 
-    private @ColorRes int hairColorToColorRes(String string) {
+    @VisibleForTesting
+    @ColorRes int hairColorToColorRes(String string) {
         String hair = string.split(",")[0]; // ignore other descriptors
         if (hair.equals("black")) {
             return R.color.black;
@@ -102,6 +126,6 @@ public class MovieCharacter {
             return R.color.grey;
         }
 
-        return R.color.clear;
+        return R.color.none;
     }
 }

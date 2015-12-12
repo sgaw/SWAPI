@@ -2,7 +2,6 @@ package sgaw.playground.com.swapiapp;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Movie;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
@@ -129,7 +128,7 @@ public class CharacterDetailFragment extends Fragment {
 
         @Override
         public void setHairColor(@ColorRes int hairColor, TextView textView) {
-            if (hairColor == R.color.clear) {
+            if (hairColor == R.color.none) {
                 textView.setCompoundDrawables(null, null, null, null);
             } else {
                 setColor(textView.getContext(),
