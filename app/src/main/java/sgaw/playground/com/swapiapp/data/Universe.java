@@ -3,14 +3,12 @@ package sgaw.playground.com.swapiapp.data;
 import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.InputStreamReader;
 
-import sgaw.playground.com.swapiapp.converters.JSONToCharacterList;
 import sgaw.playground.com.swapiapp.util.CircularArrayWrapper;
 import sgaw.playground.com.swapiapp.util.ICircularArray;
 
@@ -22,58 +20,58 @@ public class Universe {
 
     @VisibleForTesting
     static Universe sSelf = null;
-    private ICircularArray<FilmCharacter> mCharacters = null;
+    private ICircularArray<MovieCharacter> mCharacters = null;
 
-    public Universe(ICircularArray<FilmCharacter> characters) {
+    public Universe(ICircularArray<MovieCharacter> characters) {
         mCharacters = characters;
     }
 
     public static Universe get(Context context) {
         if (sSelf == null) {
-            CircularArrayWrapper<FilmCharacter> characters = new CircularArrayWrapper<>();
-            JSONToCharacterList converter = new JSONToCharacterList();
-            converter.apply(readAsset(context), characters);
+            Gson gson = new Gson();
+            SwapiResponse response = gson.fromJson(assetToJsonReader(context), SwapiResponse.class);
+            CircularArrayWrapper<MovieCharacter> characters = new CircularArrayWrapper<>(
+                    response.results.length);
+            for (MovieCharacter character : response.results) {
+                characters.addLast(character);
+            }
             sSelf = new Universe(characters);
         }
         return sSelf;
     }
 
-    private static JSONObject readAsset(Context context) {
-        StringWriter writer = new StringWriter();
+    private static JsonReader assetToJsonReader(Context context) {
+        JsonReader reader = null;
         try {
-            InputStream inputStream = context.getResources().getAssets()
-                    .open(ASSET);
-            while (inputStream.available() > 0) {
-                writer.write(inputStream.read());
-            }
-            inputStream.close();
-            writer.close();
-            String jsonString = writer.toString();
-            try {
-                return new JSONObject(jsonString);
-            } catch (JSONException je) {
-                je.printStackTrace();
-            }
-
+            reader = new JsonReader(new InputStreamReader(context.getResources().getAssets()
+                    .open(ASSET)));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-        return null;
+        return reader;
+
     }
 
-    public ICircularArray<FilmCharacter> getCharacters() {
+    public ICircularArray<MovieCharacter> getCharacters() {
         return mCharacters;
     }
 
-    public FilmCharacter getCharacter(String uri) {
+    public MovieCharacter getCharacter(String uri) {
         // Inefficient but there's not that much data, I expect
         for (int i = 0; i < mCharacters.size(); i++) {
-            if (mCharacters.get(i).getUri().equals(uri)) {
+            if (mCharacters.get(i).getUrl().equals(uri)) {
                 return mCharacters.get(i);
             }
         }
 
         throw new IllegalStateException("Sending bad URI: " + uri);
+    }
+
+    class SwapiResponse {
+        private int count;
+        private String next;
+        private String previous;
+        private MovieCharacter [] results;
     }
 
 }

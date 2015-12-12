@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import sgaw.playground.com.swapiapp.data.FilmCharacter;
+import sgaw.playground.com.swapiapp.data.MovieCharacter;
 import sgaw.playground.com.swapiapp.data.Universe;
 
 /**
@@ -34,7 +34,7 @@ public class CharacterListActivity extends AppCompatActivity {
      * Implementation is dependent on screen size, say tablet versus phone.
      */
     public interface ICharacterDetailLauncher {
-        void show(FilmCharacter character);
+        void show(MovieCharacter character);
     }
 
     @Bind(R.id.toolbar)
@@ -85,10 +85,10 @@ public class CharacterListActivity extends AppCompatActivity {
         }
 
         @Override
-        public void show(FilmCharacter character) {
+        public void show(MovieCharacter character) {
             Bundle arguments = new Bundle();
             arguments.putString(CharacterDetailFragment.ARG_CHARACTER_ID,
-                    character.getUri());
+                    character.getUrl());
             CharacterDetailFragment fragment = new CharacterDetailFragment();
             fragment.setArguments(arguments);
             mSupportFragmentManagerRef.get().beginTransaction()
@@ -108,11 +108,11 @@ public class CharacterListActivity extends AppCompatActivity {
         }
 
         @Override
-        public void show(FilmCharacter character) {
+        public void show(MovieCharacter character) {
             Context context = mContextRef.get();
             Intent intent = new Intent(context, CharacterDetailActivity.class);
             intent.putExtra(CharacterDetailFragment.ARG_CHARACTER_ID,
-                    character.getUri());
+                    character.getUrl());
             context.startActivity(intent);
         }
     }

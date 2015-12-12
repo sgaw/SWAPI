@@ -10,9 +10,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import sgaw.playground.com.swapiapp.data.FilmCharacter;
-
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
@@ -47,7 +44,6 @@ public class CharacterViewHolderTest {
         underTest.update(FilmCharacter.newBuilder()
                 .setName("foo")
                 .setBirthYear("bar")
-                .setUri("blah")
                 .build(), stubListener);
         verify(mockTextView).setText("bar");
         verify(mockTextView2).setText("foo");

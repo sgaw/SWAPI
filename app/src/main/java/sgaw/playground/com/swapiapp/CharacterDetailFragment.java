@@ -1,7 +1,10 @@
 package sgaw.playground.com.swapiapp;
 
 import android.app.Activity;
+import android.graphics.Movie;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -12,7 +15,7 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import sgaw.playground.com.swapiapp.data.FilmCharacter;
+import sgaw.playground.com.swapiapp.data.MovieCharacter;
 import sgaw.playground.com.swapiapp.data.Universe;
 
 /**
@@ -23,13 +26,6 @@ import sgaw.playground.com.swapiapp.data.Universe;
  */
 public class CharacterDetailFragment extends Fragment {
     public static final String ARG_CHARACTER_ID = "character_uri";
-
-    private static final FilmCharacter DEFAULT_CHARACTER =
-            FilmCharacter.newBuilder()
-                    .setName("FIXME default character name")
-                    .setUri("http://fixme.com")
-                    .setBirthYear("badyear")
-                    .build();
 
     @Bind(R.id.text_view_height)
     TextView mTextViewHeight;
@@ -50,11 +46,11 @@ public class CharacterDetailFragment extends Fragment {
         void setBirthYear(String birthYear, TextView textView);
         void setHeight(int height, TextView textView);
         void setWeight(int weight, TextView textView);
-        void setEyeColor(@FilmCharacter.EyeColor int eyeColor, TextView textView);
-        void setHairColor(@FilmCharacter.HairColor int[] hairColor, TextView textView);
+        void setEyeColor(@ColorRes int eyeColor, TextView textView);
+        void setHairColor(@ColorRes int hairColor, TextView textView);
     }
 
-    private FilmCharacter mCharacter = null;
+    private MovieCharacter mCharacter = null;
     private ICharacterDetailPresenter mPresenter = new CharacterDetailPresenter();
 
     /**
@@ -72,8 +68,7 @@ public class CharacterDetailFragment extends Fragment {
             mCharacter = Universe.get(getContext()).getCharacter(
                     getArguments().getString(ARG_CHARACTER_ID));
         } else {
-            // Shouldn't get here but give the visual clue that something's wrong
-            mCharacter = DEFAULT_CHARACTER;
+            throw new IllegalStateException("Unable to get any movie character data");
         }
 
     }
@@ -124,17 +119,17 @@ public class CharacterDetailFragment extends Fragment {
         }
 
         @Override
-        public void setEyeColor(@FilmCharacter.EyeColor int eyeColor, TextView textView) {
-            textView.getCompoundDrawables()[3].setTint(eyeColor);
+        public void setEyeColor(@ColorRes int eyeColor, TextView textView) {
+            @SuppressWarnings("deprecation")
+            @ColorInt int color = textView.getContext().getResources().getColor(eyeColor);
+            textView.getCompoundDrawables()[3].setTint(color);
         }
 
         @Override
-        public void setHairColor(@FilmCharacter.HairColor int[] hairColor, TextView textView) {
-            if (hairColor[0] == FilmCharacter.HAIR_NONE) {
-                textView.setCompoundDrawables(null, null, null, null);
-            } else {
-                textView.getCompoundDrawables()[3].setTint(hairColor[0]);
-            }
+        public void setHairColor(@ColorRes int hairColor, TextView textView) {
+            @SuppressWarnings("deprecation")
+            @ColorInt int color = textView.getContext().getResources().getColor(hairColor);
+            textView.getCompoundDrawables()[3].setTint(color);
         }
     }
 }

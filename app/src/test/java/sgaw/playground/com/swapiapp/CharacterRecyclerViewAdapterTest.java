@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import sgaw.playground.com.swapiapp.data.FilmCharacter;
 import sgaw.playground.com.swapiapp.util.ICircularArray;
 
 import static org.junit.Assert.*;

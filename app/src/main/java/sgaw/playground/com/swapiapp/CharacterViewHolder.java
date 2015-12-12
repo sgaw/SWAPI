@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import sgaw.playground.com.swapiapp.data.FilmCharacter;
+import sgaw.playground.com.swapiapp.data.MovieCharacter;
 
 /**
  * {@link RecyclerView.ViewHolder} for {@link sgaw.playground.com.swapiapp.data.FilmCharacter}.
@@ -35,7 +35,7 @@ public class CharacterViewHolder extends RecyclerView.ViewHolder {
         mContentView = contentView;
     }
 
-    public void update(FilmCharacter character,
+    public void update(MovieCharacter character,
                        View.OnClickListener listener) {
         mIdView.setText(character.getBirthYear());
         mContentView.setText(character.getName());
