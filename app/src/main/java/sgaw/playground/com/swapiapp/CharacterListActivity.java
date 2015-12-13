@@ -72,16 +72,8 @@ public class CharacterListActivity extends AppCompatActivity {
 
         final Universe universe = Universe.get(this);
         final CharacterRecyclerViewAdapter adapter = new CharacterRecyclerViewAdapter(launcher,
-                universe.getCharacters());
+                universe);
         recyclerView.setAdapter(adapter);
-
-        // Fetch more data
-        universe.fetchMoreCharacters(new Universe.MovieCharactersCallback() {
-            @Override
-            public void onUpdated(List<MovieCharacter> characters) {
-                adapter.appendCharacters(characters);
-            }
-        });
     }
 
     /**

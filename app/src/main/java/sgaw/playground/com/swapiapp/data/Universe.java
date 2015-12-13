@@ -2,7 +2,6 @@ package sgaw.playground.com.swapiapp.data;
 
 import android.content.Context;
 import android.support.annotation.VisibleForTesting;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -12,10 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
 import sgaw.playground.com.swapiapp.util.CircularArrayWrapper;
 import sgaw.playground.com.swapiapp.util.ICircularArray;
 
@@ -32,8 +27,11 @@ public class Universe {
     // Indicates which page to fetch if we want more data from the SWAPI service.
     private int nextPage = 2;
 
+    /**
+     * Callback to notify that more movie characters have been fetched over the network.
+     */
     public interface MovieCharactersCallback {
-        public void onUpdated(List<MovieCharacter> characters);
+        void onUpdated(List<MovieCharacter> characters);
     }
 
     public Universe(ICircularArray<MovieCharacter> characters) {
@@ -90,11 +88,19 @@ public class Universe {
     }
 
     public void fetchMoreCharacters(final MovieCharactersCallback callback) {
+        if (nextPage < 0) {
+            return; // We've got all the data we can.
+        }
+
         SWAPIApi.get().getMovieCharacters(nextPage, new SWAPIApi.MovieCharactersCallback() {
                 @Override
-                public void onResponse(List<MovieCharacter> characters) {
+                public void onResponse(List<MovieCharacter> characters, boolean hasNextPage) {
                     Universe.this.add(characters);
-                    nextPage++;
+                    if (hasNextPage) {
+                        nextPage++;
+                    } else {
+                        nextPage = -1;
+                    }
                     callback.onUpdated(characters);
                 }
 
@@ -119,6 +125,9 @@ public class Universe {
 
         public MovieCharacter[] getMovieCharacters() {
             return results;
+        }
+        public boolean hasNext() {
+            return next != null;
         }
     } // end class SwapiResponse
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import sgaw.playground.com.swapiapp.data.MovieCharacter;
+import sgaw.playground.com.swapiapp.data.Universe;
 import sgaw.playground.com.swapiapp.util.ICircularArray;
 
 /**
@@ -19,12 +20,14 @@ public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<Character
     @VisibleForTesting
     final CharacterListActivity.ICharacterDetailLauncher mCharacterDetailLauncher;
     private ICircularArray<MovieCharacter> mCharacters;
+    private Universe mUniverse;
 
     public CharacterRecyclerViewAdapter(
             CharacterListActivity.ICharacterDetailLauncher characterDetailLauncher,
-            ICircularArray<MovieCharacter> characters) {
+            Universe universe) {
         mCharacterDetailLauncher = characterDetailLauncher;
-        mCharacters = characters;
+        mUniverse = universe;
+        mCharacters = universe.getCharacters();
     }
 
 
@@ -44,6 +47,12 @@ public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<Character
                 mCharacterDetailLauncher.show(character);
             }
         });
+
+        // BUGBUG(sgaw): This is probably not the best place for this.  Also we should
+        // indicate to the user that we're fetching more data.
+        if (position == mCharacters.size() - 1) {
+            loadMore();
+        }
     }
 
     @Override
@@ -51,7 +60,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<Character
         return mCharacters.size();
     }
 
-    public void appendCharacters(List<MovieCharacter> newCharacters) {
+    private void appendCharacters(List<MovieCharacter> newCharacters) {
         final int positionStart = mCharacters.size();
         for (MovieCharacter character: newCharacters) {
             mCharacters.addLast(character);
@@ -59,4 +68,16 @@ public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<Character
         int itemCount = newCharacters.size();
         notifyItemRangeInserted(positionStart, itemCount);
     }
+
+
+    private void loadMore() {
+        // Fetch more data
+        mUniverse.fetchMoreCharacters(new Universe.MovieCharactersCallback() {
+            @Override
+            public void onUpdated(List<MovieCharacter> characters) {
+                appendCharacters(characters);
+            }
+        });
+    }
+
 }

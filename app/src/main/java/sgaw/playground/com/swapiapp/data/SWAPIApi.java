@@ -1,14 +1,6 @@
 package sgaw.playground.com.swapiapp.data;
 
-import android.content.Context;
-import android.graphics.Movie;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import retrofit.Call;
@@ -17,7 +9,6 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 import retrofit.http.GET;
-import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -35,7 +26,7 @@ public class SWAPIApi {
     // converters that well.
     public interface MovieCharactersCallback {
         /** Successful HTTP response. */
-        void onResponse(List<MovieCharacter> characters);
+        void onResponse(List<MovieCharacter> characters, boolean hasNextPage);
 
         /** Invoked when a network or unexpected exception occurred during the HTTP request. */
         void onFailure(Throwable t);
@@ -57,6 +48,7 @@ public class SWAPIApi {
 
     public void getMovieCharacters(int page, final MovieCharactersCallback movieCharactersCallback) {
         Call<Universe.SwapiResponse> asynccall = mService.listCharacters(page);
+        // BUGBUG(sgaw): How do we actually know we have network access?  Or does this just fail?
         asynccall.enqueue(new Callback<Universe.SwapiResponse>(){
             @Override
             public void onResponse(Response<Universe.SwapiResponse> response, Retrofit retrofit) {
@@ -65,7 +57,7 @@ public class SWAPIApi {
                 for (MovieCharacter movieCharacter: response.body().getMovieCharacters()) {
                     results.add(movieCharacter);
                 }
-                movieCharactersCallback.onResponse(results);
+                movieCharactersCallback.onResponse(results, response.body().hasNext());
             }
 
             @Override
