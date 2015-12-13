@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -69,8 +70,18 @@ public class CharacterListActivity extends AppCompatActivity {
             launcher = new ActivityCharacterDetailLauncher(this);
         }
 
-        recyclerView.setAdapter(new CharacterRecyclerViewAdapter(launcher,
-                Universe.get(this).getCharacters()));
+        final Universe universe = Universe.get(this);
+        final CharacterRecyclerViewAdapter adapter = new CharacterRecyclerViewAdapter(launcher,
+                universe.getCharacters());
+        recyclerView.setAdapter(adapter);
+
+        // Fetch more data
+        universe.fetchMoreCharacters(new Universe.MovieCharactersCallback() {
+            @Override
+            public void onUpdated(List<MovieCharacter> characters) {
+                adapter.appendCharacters(characters);
+            }
+        });
     }
 
     /**

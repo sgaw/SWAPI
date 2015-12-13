@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import sgaw.playground.com.swapiapp.data.MovieCharacter;
 import sgaw.playground.com.swapiapp.util.ICircularArray;
 
@@ -16,7 +18,7 @@ import sgaw.playground.com.swapiapp.util.ICircularArray;
 public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<CharacterViewHolder> {
     @VisibleForTesting
     final CharacterListActivity.ICharacterDetailLauncher mCharacterDetailLauncher;
-    private final ICircularArray<MovieCharacter> mCharacters;
+    private ICircularArray<MovieCharacter> mCharacters;
 
     public CharacterRecyclerViewAdapter(
             CharacterListActivity.ICharacterDetailLauncher characterDetailLauncher,
@@ -47,5 +49,14 @@ public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<Character
     @Override
     public int getItemCount() {
         return mCharacters.size();
+    }
+
+    public void appendCharacters(List<MovieCharacter> newCharacters) {
+        final int positionStart = mCharacters.size();
+        for (MovieCharacter character: newCharacters) {
+            mCharacters.addLast(character);
+        }
+        int itemCount = newCharacters.size();
+        notifyItemRangeInserted(positionStart, itemCount);
     }
 }

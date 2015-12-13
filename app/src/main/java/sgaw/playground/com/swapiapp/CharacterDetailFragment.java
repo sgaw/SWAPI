@@ -45,8 +45,8 @@ public class CharacterDetailFragment extends Fragment {
 
     public interface ICharacterDetailPresenter {
         void setBirthYear(String birthYear, TextView textView);
-        void setHeight(int height, TextView textView);
-        void setWeight(int weight, TextView textView);
+        void setHeight(String height, TextView textView);
+        void setWeight(String weight, TextView textView);
         void setEyeColor(@ColorRes int eyeColor, TextView textView);
         void setHairColor(@ColorRes int hairColor, TextView textView);
     }
@@ -110,13 +110,13 @@ public class CharacterDetailFragment extends Fragment {
         }
 
         @Override
-        public void setHeight(int height, TextView textView) {
-            textView.setText(String.valueOf(height));
+        public void setHeight(String height, TextView textView) {
+            textView.setText(height);
         }
 
         @Override
-        public void setWeight(int weight, TextView textView) {
-            textView.setText(String.valueOf(weight));
+        public void setWeight(String weight, TextView textView) {
+            textView.setText(weight);
         }
 
         @Override

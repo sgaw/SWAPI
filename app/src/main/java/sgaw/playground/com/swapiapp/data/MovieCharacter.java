@@ -10,8 +10,8 @@ import sgaw.playground.com.swapiapp.R;
  */
 public class MovieCharacter {
     private String name;
-    private int height;
-    private int mass;
+    private String height;
+    private String mass;
     private String hair_color;
     private String skin_color;
     private String eye_color;
@@ -47,11 +47,11 @@ public class MovieCharacter {
         this.name = name;
     }
 
-    public int getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public int getMass() {
+    public String getMass() {
         return mass;
     }
 

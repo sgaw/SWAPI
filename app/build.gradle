@@ -31,6 +31,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.code.gson:gson:2.5'
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
 
     // Probably could use Data Bind library instead but I'm not familiar yet
     compile 'com.jakewharton:butterknife:7.0.1'
