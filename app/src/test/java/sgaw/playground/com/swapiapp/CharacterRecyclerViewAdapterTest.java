@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import sgaw.playground.com.swapiapp.data.MovieCharacter;
+import sgaw.playground.com.swapiapp.data.Universe;
 import sgaw.playground.com.swapiapp.util.ICircularArray;
 
 import static org.junit.Assert.*;
@@ -56,7 +57,9 @@ public class CharacterRecyclerViewAdapterTest {
 
         };
 
-        underTest = new CharacterRecyclerViewAdapter(mockLauncher, mData);
+        Universe universe = new Universe(mData);
+
+        underTest = new CharacterRecyclerViewAdapter(mockLauncher, universe);
     }
 
     @Before
