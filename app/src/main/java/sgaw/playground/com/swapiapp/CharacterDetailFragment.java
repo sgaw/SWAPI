@@ -93,6 +93,12 @@ public class CharacterDetailFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
     private void updateViews() {
         mPresenter.setBirthYear(mCharacter.getBirthYear(), mTextViewBirthYear);
         mPresenter.setHeight(mCharacter.getHeight(), mTextViewHeight);
